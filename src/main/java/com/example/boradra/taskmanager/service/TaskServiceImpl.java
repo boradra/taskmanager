@@ -1,6 +1,7 @@
 package com.example.boradra.taskmanager.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.context.annotation.Bean;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.boradra.taskmanager.dto.TaskCreateRequest;
 import com.example.boradra.taskmanager.dto.TaskResponse;
+import com.example.boradra.taskmanager.dto.TaskUpdateRequest;
 import com.example.boradra.taskmanager.entity.Task;
 import com.example.boradra.taskmanager.repository.TaskRepository;
 
@@ -47,6 +49,24 @@ public class TaskServiceImpl implements TaskService {
         return responses;
     }
 
+    public TaskResponse updateTask(Long id,TaskUpdateRequest request)
+        {
+            Task task = taskRepository.findById(id).orElseThrow(() -> new RuntimeException("Task not found"));
+            task.setTitle(request.getTitle());
+            task.setDescription(request.getDescription());
+            task.setCompleted(request.isCompleted());
+            Task updatedTask = taskRepository.save(task);
+
+            TaskResponse response = new TaskResponse();
+            response.setId(updatedTask.getId());
+            response.setTitle(updatedTask.getTitle());
+            response.setDescription(updatedTask.getDescription());
+            response.setCompleted(updatedTask.isCompleted());   
+            
+            return response;
+
+        }
+    
 
    
 }
