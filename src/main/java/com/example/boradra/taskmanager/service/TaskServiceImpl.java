@@ -7,13 +7,14 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
+import com.example.boradra.taskmanager.entity.Task;
 import com.example.boradra.taskmanager.dto.TaskCreateRequest;
 import com.example.boradra.taskmanager.dto.TaskResponse;
 import com.example.boradra.taskmanager.dto.TaskUpdateRequest;
-import com.example.boradra.taskmanager.entity.Task;
-import com.example.boradra.taskmanager.repository.TaskRepository;
 
 import ch.qos.logback.core.joran.util.beans.BeanUtil;
+import com.example.boradra.taskmanager.exception.TaskNotFoundException;
+import com.example.boradra.taskmanager.repository.TaskRepository;
 
 @Service
 public class TaskServiceImpl implements TaskService {
@@ -51,7 +52,7 @@ public class TaskServiceImpl implements TaskService {
 
     public TaskResponse updateTask(Long id,TaskUpdateRequest request)
         {
-            Task task = taskRepository.findById(id).orElseThrow(() -> new RuntimeException("Task not found"));
+            Task task = taskRepository.findById(id).orElseThrow(() -> new TaskNotFoundException("Task not found"));
             task.setTitle(request.getTitle());
             task.setDescription(request.getDescription());
             task.setCompleted(request.isCompleted());
@@ -66,7 +67,10 @@ public class TaskServiceImpl implements TaskService {
             return response;
 
         }
-    
+    public void deleteTask(Long id) {
+        Task task = taskRepository.findById(id).orElseThrow(() -> new TaskNotFoundException("Task not found"));
+        taskRepository.delete(task);
+    }
 
    
 }

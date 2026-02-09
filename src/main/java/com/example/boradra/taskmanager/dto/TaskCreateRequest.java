@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class TaskCreateRequest {
-    @NotBlank
+    @NotBlank(message = "Başlık boş olamaz")
     @Size(max = 100)
     private String title;
     @Size(max = 500)
