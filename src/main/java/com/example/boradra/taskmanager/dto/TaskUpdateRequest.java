@@ -1,6 +1,5 @@
 package com.example.boradra.taskmanager.dto;
 
-import java.util.UUID;
 
 import lombok.Data;
 
