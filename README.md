@@ -1,49 +1,45 @@
-<h1>Task Manager API (v1.0)</h1>
+<h1 align="center">Task Manager API <kbd>v1.1</kbd></h1>
 
-<h2>Description</h2>
-<p>This project is my <b>first comprehensive deep-dive</b> into the Java and Spring Boot ecosystem. While it serves as a "first draft," my goal was to move beyond basic tutorials and implement a structured architecture. It is a Task Management REST API designed to practice clean code principles, layered architecture, and modern backend integration techniques.</p>
 
-<h2>What I Learned & Implemented</h2>
-<p>During the development of this initial version, I focused on mastering the following core backend concepts:</p>
-<ul>
-    <li><b>Layered Architecture:</b> I organized the code into distinct layers—Controller, Service, and Repository—to ensure a clear separation of concerns.</li>
-    <li><b>DTO Pattern & Data Mapping:</b> To protect the integrity of database entities, I implemented the DTO (Data Transfer Object) pattern. I used MapStruct to handle high-performance object mapping between layers.</li>
-    <li><b>Centralized Exception Handling:</b> I built a global error management system using <code>@ControllerAdvice</code> to provide consistent and user-friendly error responses across the entire API.</li>
-    <li><b>Data Validation:</b> I ensured data integrity by using Jakarta Bean Validation to validate user input before it reaches the business logic.</li>
-    <li><b>Secure Configuration:</b> I learned how to handle sensitive information by moving database credentials to <b>Environment Variables</b>, following best practices for managing externalized configuration.</li>
-</ul>
+### v1.1 Updates
+While v1.0 was about getting the system running, **v1.1** is about doing it right. I refactored the project to implement a decoupled, layer-based architecture to ensure that business logic stays at the center, independent of external frameworks.
+* **Clean Architecture:** Refactored from a traditional Layered Architecture to a Clean Architecture to strictly decouple core business logic from external frameworks and infrastructure.
+* **Domain-Driven Isolation:** I moved the core logic into a pure `domain` layer. The `Task` model is now a POJO, completely separated from JPA annotations.
+* **Decoupled Infrastructure:** Database logic is now strictly contained within the `infrastructure` layer. The application logic communicates with the database through interfaces, making the core system tech-agnostic.
+* **Global Resilience:** The `GlobalExceptionHandler` was upgraded to catch both custom domain errors like `DomainTaskNotFoundException` and Jakarta validation failures.
 
-<h2>Tech Stack</h2>
-<ul>
-    <li><b>Spring Boot 4.0.2:</b> The core framework used for application bootstrapping and auto-configuration.</li>
-    <li><b><a href="https://spring.io/projects/spring-data-jpa">Spring Data JPA</a> & <a href="https://www.postgresql.org/">PostgreSQL</a>:</b> For robust data persistence and relational database management.</li>
-    <li><b><a href="https://mapstruct.org/">MapStruct 1.5.5</a>:</b> For compile-time safe object conversions.</li>
-    <li><b><a href="https://projectlombok.org/">Lombok</a>:</b> To reduce boilerplate code like getters, setters, and constructors.</li>
-    <li><b><a href="https://springdoc.org/">SpringDoc OpenAPI (Swagger UI)</a>:</b> To provide an interactive interface for testing and documenting the API endpoints.</li>
-</ul>
+---
 
-<h2>Project Structure</h2>
-<pre><code>.
-├── src/main/java/com/example/boradra/taskmanager/
-│   ├── controller/      # REST API Endpoints
-│   ├── service/         # Business Logic and Interfaces
-│   ├── repository/      # Data Access Layer (JPA)
-│   ├── entity/          # Database Models
-│   ├── dto/             # Data Transfer Objects
-│   ├── taskMapper/      # MapStruct Mapping Interfaces
-│   └── exception/       # Global Exception Handling Logic
-├── src/main/resources/  # application.properties and configurations
-├── pom.xml              # Maven Project Object Model
-└── README.md            # Project Documentation</code></pre>
+### Tech Stack
+| Component | Technology |
+| :--- | :--- |
+| **Backend** | Spring Boot 4.0.2 & Java 17 |
+| **Database** | PostgreSQL & Spring Data JPA |
+| **Mapping** | MapStruct 1.5.5 |
+| **Boilerplate** | Lombok 1.18.42 |
+| **API Docs** | SpringDoc OpenAPI (Swagger UI) |
 
-<h2>Key Directory Overviews</h2>
-<ul>
-    <li><a href="./src/main/java/com/example/boradra/taskmanager/controller/"><code>controller/</code></a>: The entry point for HTTP requests, handling the communication between the client and the service layer.</li>
-    <li><a href="./src/main/java/com/example/boradra/taskmanager/service/"><code>service/</code></a>: The "brain" of the application where all business rules and task logic are processed.</li>
-    <li><a href="./src/main/java/com/example/boradra/taskmanager/taskMapper/"><code>taskMapper/</code></a>: Dedicated interfaces for MapStruct to automate the conversion between Entities and DTOs.</li>
-    <li><a href="./src/main/resources/"><code>resources/</code></a>: Contains the <a href="./src/main/resources/application.properties">application.properties</a> file, which manages database connections and environment variable placeholders.</li>
-</ul>
+---
 
-<h2>How to Test</h2>
-<p>Once the application is running, you can access the interactive <b>Swagger UI</b> to test the endpoints directly from your browser:</p>
-<code>http://localhost:8080/swagger-ui/index.html</code>
+### 📂 Project Structure
+The project is organized into four functional layers to maintain a strict separation of concerns:
+
+* `presentation`: REST Controllers and global exception handling logic.
+* `application`: Service interfaces, implementations, and DTOs.
+* `domain`: The core "brain"; contains business models and repository abstractions.
+* `infrastructure`: Technical implementation including JPA entities, mappers, and repository logic.
+
+---
+
+### Getting Started
+1.  **Environment:** Ensure PostgreSQL is running and your `DB_PASSWORD` is set in your environment variables.
+2.  **Build & Run:**
+    ```bash
+    ./mvnw spring-boot:run
+    ```
+3.  **Test:** Access the interactive Swagger UI to test the endpoints directly:
+    `http://localhost:8080/swagger-ui/index.html`
+
+---
+### 📜 Looking for v1.0?
+You can find the documentation and code for the previous Layered Architecture version by viewing the [file history](https://github.com/boradra/taskmanager/blob/main/README.md).
