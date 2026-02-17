@@ -1,8 +1,10 @@
-package com.example.boradra.taskmanager.service;
+package com.example.boradra.taskmanager.application.service;
 
 import java.util.List;
 
-import com.example.boradra.taskmanager.dto.*;
+import com.example.boradra.taskmanager.application.dto.TaskCreateRequest;
+import com.example.boradra.taskmanager.application.dto.TaskResponse;
+import com.example.boradra.taskmanager.application.dto.TaskUpdateRequest;
 
 public interface TaskService {
     public TaskResponse createTask(TaskCreateRequest request);

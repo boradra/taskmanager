@@ -1,31 +1,28 @@
-package com.example.boradra.taskmanager.entity;
+package com.example.boradra.taskmanager.infrastructure.persistence.entity; 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*; 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "tasks")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "tasks")
-public class Task {
+public class TaskJpaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+
     @Column(name = "title", nullable = false)
     private String title;
+
     @Column(name = "description")
     private String description;
+
     @Column(name = "completed", nullable = false)
     private boolean completed;
-
 }

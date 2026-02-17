@@ -1,12 +1,11 @@
-package com.example.boradra.taskmanager.controller;
+package com.example.boradra.taskmanager.presentation.controller;
 
 import java.util.List;
 
-
-import com.example.boradra.taskmanager.dto.TaskCreateRequest;
-import com.example.boradra.taskmanager.dto.TaskResponse;
-import com.example.boradra.taskmanager.dto.TaskUpdateRequest;
-import com.example.boradra.taskmanager.service.TaskService;
+import com.example.boradra.taskmanager.application.dto.TaskCreateRequest;
+import com.example.boradra.taskmanager.application.dto.TaskResponse;
+import com.example.boradra.taskmanager.application.dto.TaskUpdateRequest;
+import com.example.boradra.taskmanager.application.service.TaskService;
 
 import jakarta.validation.Valid;
 

@@ -1,4 +1,4 @@
-package com.example.boradra.taskmanager.dto;
+package com.example.boradra.taskmanager.application.dto;
 
 
 import lombok.Data;
