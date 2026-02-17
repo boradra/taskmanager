@@ -42,4 +42,4 @@ The project is organized into four functional layers to maintain a strict separa
 
 ---
 ### 📜 Looking for v1.0?
-You can find the documentation and code for the previous Layered Architecture version by viewing the [file history](https://github.com/boradra/taskmanager/blob/main/README.md).
+You can find the documentation and code for the previous Layered Architecture version by viewing the [file history](https://github.com/boradra/taskmanager/commit/723a0480c2b517536ec268af4fccaa88102a9e39).
