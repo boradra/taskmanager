@@ -3,7 +3,8 @@ package com.example.boradra.taskmanager.infrastructure.persistence.repository;
 import com.example.boradra.taskmanager.domain.model.Task;
 import com.example.boradra.taskmanager.domain.repository.TaskRepository;
 import com.example.boradra.taskmanager.infrastructure.persistence.entity.TaskJpaEntity;
-import com.example.boradra.taskmanager.infrastructure.persistence.mapper.TaskMapper;
+import com.example.boradra.taskmanager.infrastructure.persistence.persistenceMapper.PersistenceMapper;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
 public class TaskRepositoryImpl implements TaskRepository {
 
     private final JpaTaskRepository jpaTaskRepository; 
-    private final TaskMapper taskMapper; 
+    private final PersistenceMapper taskMapper; 
 
     @Override
     public Task save(Task task) {

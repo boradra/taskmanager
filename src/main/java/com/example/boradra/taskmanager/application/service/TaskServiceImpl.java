@@ -8,29 +8,29 @@ import com.example.boradra.taskmanager.application.dto.TaskResponse;
 import com.example.boradra.taskmanager.application.dto.TaskUpdateRequest;
 import com.example.boradra.taskmanager.domain.model.Task;
 import com.example.boradra.taskmanager.domain.repository.TaskRepository;
-import com.example.boradra.taskmanager.infrastructure.persistence.mapper.TaskMapper;
+import com.example.boradra.taskmanager.application.applicationMapper.ApplicationMapper;
 import com.example.boradra.taskmanager.domain.exception.DomainTaskNotFoundException;
 
 @Service
 public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
-    private final TaskMapper taskMapper;
-    public TaskServiceImpl(TaskRepository taskRepository, TaskMapper taskMapper) {
+    private final ApplicationMapper taskDtoMapper;
+    public TaskServiceImpl(TaskRepository taskRepository, ApplicationMapper taskDtoMapper) {
         this.taskRepository = taskRepository;
-        this.taskMapper = taskMapper;
+        this.taskDtoMapper = taskDtoMapper;
     }
 
     public TaskResponse createTask(TaskCreateRequest request) {
-        Task task = taskMapper.toDomain(request);
+        Task task = taskDtoMapper.toDomain(request);
         Task savedTask = taskRepository.save(task);
-        TaskResponse response = taskMapper.toResponse(savedTask);
+        TaskResponse response = taskDtoMapper.toResponse(savedTask);
         return response;  
     }
 
     public List<TaskResponse> getAllTasks() {
         List<Task> tasks = taskRepository.findAll();
         List<TaskResponse> responses = tasks.stream().map(task -> {
-            TaskResponse response = taskMapper.toResponse(task);
+            TaskResponse response = taskDtoMapper.toResponse(task);
             return response;
         }).toList();
         return responses;
@@ -39,9 +39,9 @@ public class TaskServiceImpl implements TaskService {
     public TaskResponse updateTask(Long id,TaskUpdateRequest request)
         {
             Task task = taskRepository.findById(id).orElseThrow(() -> new DomainTaskNotFoundException("Task not found"));
-            taskMapper.updateDomainFromRequest(request, task);
+            taskDtoMapper.updateDomainFromRequest(request, task);
             Task updatedTask = taskRepository.save(task);
-            TaskResponse response = taskMapper.toResponse(updatedTask);
+            TaskResponse response = taskDtoMapper.toResponse(updatedTask);
             return response;
         }
     public void deleteTask(Long id) {
@@ -51,7 +51,7 @@ public class TaskServiceImpl implements TaskService {
 
     public TaskResponse getTaskById(Long id) {
         Task task = taskRepository.findById(id).orElseThrow(() -> new DomainTaskNotFoundException("Task not found"));
-        TaskResponse response = taskMapper.toResponse(task);
+        TaskResponse response = taskDtoMapper.toResponse(task);
         return response;
     }
 
