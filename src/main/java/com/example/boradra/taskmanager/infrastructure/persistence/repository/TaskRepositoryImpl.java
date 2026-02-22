@@ -1,11 +1,13 @@
 package com.example.boradra.taskmanager.infrastructure.persistence.repository;
 
 import com.example.boradra.taskmanager.domain.model.Task;
+import com.example.boradra.taskmanager.domain.model.TaskTitle;
 import com.example.boradra.taskmanager.domain.repository.TaskRepository;
 import com.example.boradra.taskmanager.infrastructure.persistence.entity.TaskJpaEntity;
 import com.example.boradra.taskmanager.infrastructure.persistence.persistenceMapper.PersistenceMapper;
 
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -47,5 +49,11 @@ public class TaskRepositoryImpl implements TaskRepository {
     @Override
     public void deleteById(Long id) {
         jpaTaskRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean existByTitle(TaskTitle taskTitle) 
+    {
+        return jpaTaskRepository.existsByTitle(taskTitle);
     }
 }

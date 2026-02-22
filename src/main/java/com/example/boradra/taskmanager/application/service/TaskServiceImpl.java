@@ -7,6 +7,7 @@ import com.example.boradra.taskmanager.application.dto.TaskCreateRequest;
 import com.example.boradra.taskmanager.application.dto.TaskResponse;
 import com.example.boradra.taskmanager.application.dto.TaskUpdateRequest;
 import com.example.boradra.taskmanager.domain.model.Task;
+import com.example.boradra.taskmanager.domain.model.TaskTitle;
 import com.example.boradra.taskmanager.domain.repository.TaskRepository;
 import com.example.boradra.taskmanager.application.applicationMapper.ApplicationMapper;
 import com.example.boradra.taskmanager.domain.exception.DomainTaskNotFoundException;
@@ -21,6 +22,12 @@ public class TaskServiceImpl implements TaskService {
     }
 
     public TaskResponse createTask(TaskCreateRequest request) {
+        TaskTitle titleToRequest = new TaskTitle(request.getTitle());
+
+        if (taskRepository.existByTitle(titleToRequest))
+        {
+        throw new RuntimeException("Bu başlığa sahip bir görev zaten mevcut.");
+        }
         Task task = taskDtoMapper.toDomain(request);
         Task savedTask = taskRepository.save(task);
         TaskResponse response = taskDtoMapper.toResponse(savedTask);

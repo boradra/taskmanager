@@ -1,5 +1,7 @@
 package com.example.boradra.taskmanager.infrastructure.persistence.entity; 
 
+
+
 import jakarta.persistence.*; 
 import lombok.AllArgsConstructor;
 import lombok.Data;
