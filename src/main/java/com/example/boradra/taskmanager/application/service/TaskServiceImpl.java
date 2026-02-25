@@ -62,5 +62,13 @@ public class TaskServiceImpl implements TaskService {
         return response;
     }
 
+    public TaskResponse completeTask(Long id) {
+        Task task = taskRepository.findById(id).orElseThrow(() -> new DomainTaskNotFoundException("Task not found"));
+        task.complete();
+        taskRepository.save(task);
+        return taskDtoMapper.toResponse(task);
+       
+    }
+
    
 }

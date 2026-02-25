@@ -21,6 +21,8 @@ public final class TaskTitle {
     }
 
     /* 
+    Note : No need more, @Value annotation provides equals and hashcode methods based on value field for me.
+    
     @Override
     public boolean equals(Object o)
     {

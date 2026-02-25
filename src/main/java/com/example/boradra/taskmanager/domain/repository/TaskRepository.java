@@ -15,4 +15,5 @@ public interface TaskRepository {
     void deleteById(Long id);
 
     boolean existByTitle(TaskTitle taskTitle);
+
 }

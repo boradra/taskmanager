@@ -21,17 +21,21 @@ public class Task {
     public boolean isCompleted() {
         return completed;
     }
-
-    public void setId(Long id) {
+    @SuppressWarnings("unused")
+    private void setId(Long id) {
         this.id = id;
     }
-
-    public void setTitle(TaskTitle title) {
+    @SuppressWarnings("unused")
+    private void setTitle(TaskTitle title) {
         this.title = title;
     }
-
-    public void setDescription(String description) {
+    @SuppressWarnings("unused")
+    private void setDescription(String description) {
         this.description = description;
+    }
+    @SuppressWarnings("unused")
+    private void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 
     public void complete() {

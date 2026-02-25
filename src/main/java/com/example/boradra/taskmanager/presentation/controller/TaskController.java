@@ -58,5 +58,12 @@ public class TaskController {
     public TaskResponse getTaskById(@PathVariable Long id) {
         return taskService.getTaskById(id);
     }
+
+    @PutMapping("/path/complete/{id}")
+    public TaskResponse completeTask(@PathVariable Long id) {
+        return taskService.completeTask(id);
+
+    
+    }
     
 }
