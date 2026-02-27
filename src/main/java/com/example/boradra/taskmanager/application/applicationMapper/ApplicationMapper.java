@@ -4,6 +4,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
+import java.util.List;
+
 import com.example.boradra.taskmanager.application.dto.TaskCreateRequest;
 import com.example.boradra.taskmanager.application.dto.TaskResponse;
 import com.example.boradra.taskmanager.application.dto.TaskUpdateRequest;

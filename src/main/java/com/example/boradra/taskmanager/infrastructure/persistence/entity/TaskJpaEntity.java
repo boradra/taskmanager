@@ -2,6 +2,10 @@ package com.example.boradra.taskmanager.infrastructure.persistence.entity;
 
 
 
+import java.time.LocalDate;
+
+import com.example.boradra.taskmanager.domain.model.TaskType;
+
 import jakarta.persistence.*; 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,4 +31,11 @@ public class TaskJpaEntity {
 
     @Column(name = "completed", nullable = false)
     private boolean completed;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tasktype")
+    private TaskType taskType;
+
+    @Column(name = "next_execution_date")
+    private LocalDate nextExecutionDate;
 }

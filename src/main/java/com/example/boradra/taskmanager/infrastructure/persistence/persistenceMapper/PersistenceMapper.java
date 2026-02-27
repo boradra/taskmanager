@@ -25,5 +25,4 @@ public interface PersistenceMapper {
     Task toDomain(TaskJpaEntity jpaEntity);
 
     
-   
 }

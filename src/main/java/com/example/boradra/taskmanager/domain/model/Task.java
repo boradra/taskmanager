@@ -1,49 +1,43 @@
 package com.example.boradra.taskmanager.domain.model;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.val;
 
+import java.time.LocalDate;
+import java.util.Objects;
 
-// com.example.boradra.taskmanager.domain.model
+@Getter
 public class Task {
     private Long id;
     private TaskTitle title;
     private String description;
     private boolean completed;
+    private TaskType type;             
+    private LocalDate nextExecutionDate; 
 
-    public Long getId() {
-        return id;
-    }
-    public TaskTitle getTitle() {
-        return title;
-    }
-    public String getDescription() {
-        return description;
-    }
-    public boolean isCompleted() {
-        return completed;
-    }
-    @SuppressWarnings("unused")
-    private void setId(Long id) {
+    @Builder
+    private Task(Long id, TaskTitle title, String description, boolean completed, TaskType type, LocalDate nextExecutionDate) {
+
+        validateNextExecutionDate();
         this.id = id;
-    }
-    @SuppressWarnings("unused")
-    private void setTitle(TaskTitle title) {
-        this.title = title;
-    }
-    @SuppressWarnings("unused")
-    private void setDescription(String description) {
+        this.title = Objects.requireNonNull(title, "Task title cannot be null");
         this.description = description;
-    }
-    @SuppressWarnings("unused")
-    private void setCompleted(boolean completed) {
         this.completed = completed;
+        this.type = (type != null) ? type : TaskType.ONCE; 
+        this.nextExecutionDate = nextExecutionDate;
     }
 
     public void complete() {
-       if(this.completed)
-       {
-            throw new IllegalStateException("Mission already completed.");
+       if(this.completed) {
+            throw new IllegalStateException("Task is already completed.");
        }
        this.completed = true;
     }
-    
+
+    private void validateNextExecutionDate() {
+        if (type != null && type != TaskType.ONCE && nextExecutionDate == null) {
+            throw new IllegalArgumentException("Next execution date must be provided for repeating tasks.");
+        }
+    }
 }
