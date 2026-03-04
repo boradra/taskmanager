@@ -21,8 +21,11 @@ public interface ApplicationMapper {
 
     default TaskTitle map(String title) {
         return title != null ? new TaskTitle(title) : null;
-
     }
+
+    List<Task> toDomainList(List<TaskCreateRequest> requests);
+
+    List<TaskResponse> toResponseList(List<Task> tasks);
     
     @Mapping(target = "id" , ignore = true )
     @Mapping(target = "completed", ignore = true)

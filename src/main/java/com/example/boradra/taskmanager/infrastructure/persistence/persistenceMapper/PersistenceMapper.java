@@ -5,6 +5,7 @@ import com.example.boradra.taskmanager.infrastructure.persistence.entity.TaskJpa
 
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 
 @Mapper(componentModel = "spring")
@@ -19,9 +20,11 @@ public interface PersistenceMapper {
 
     }
 
+    @Mapping(target = "title", source = "title")
     TaskJpaEntity toJpaEntity(Task domainTask);
 
 
+    @Mapping(target = "title", source = "title")
     Task toDomain(TaskJpaEntity jpaEntity);
 
     
