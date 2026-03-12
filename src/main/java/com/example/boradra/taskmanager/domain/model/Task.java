@@ -19,13 +19,13 @@ public class Task {
     @Builder
     private Task(Long id, TaskTitle title, String description, boolean completed, TaskType type, LocalDate nextExecutionDate) {
 
-        validateNextExecutionDate();
         this.id = id;
         this.title = Objects.requireNonNull(title, "Task title cannot be null");
         this.description = description;
         this.completed = completed;
         this.type = (type != null) ? type : TaskType.ONCE; 
         this.nextExecutionDate = nextExecutionDate;
+        validateNextExecutionDate();
     }
 
     public void complete() {
