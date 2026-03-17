@@ -6,7 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;    
 import com.example.boradra.taskmanager.domain.exception.DomainTaskNotFoundException;
+import com.example.boradra.taskmanager.domain.exception.DomainTaskAlreadyExist;
 import com.example.boradra.taskmanager.presentation.ErrorResponse;
+import com.example.boradra.taskmanager.domain.exception.InvalidTaskTypeException;
 import java.time.LocalDate;
 
 
@@ -37,5 +39,12 @@ public class GlobalExceptionHandler {
 
         return buildErrorResponse(ex, HttpStatus.BAD_REQUEST);
     }
-    
+    @ExceptionHandler(DomainTaskAlreadyExist.class)
+    public ResponseEntity<ErrorResponse> handleTaskAlreadyExistException(DomainTaskAlreadyExist ex) {
+        return buildErrorResponse(ex, HttpStatus.CONFLICT);
+    }
+    @ExceptionHandler(InvalidTaskTypeException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidTaskTypeException(InvalidTaskTypeException ex) {
+        return buildErrorResponse(ex, HttpStatus.BAD_REQUEST);
+    }
 }

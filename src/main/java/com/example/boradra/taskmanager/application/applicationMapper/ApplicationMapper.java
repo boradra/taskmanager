@@ -15,6 +15,13 @@ import com.example.boradra.taskmanager.domain.model.TaskTitle;
 @Mapper(componentModel = "spring")
 public interface ApplicationMapper {
 
+    @Mapping(target = "id" , ignore = true )
+    @Mapping(target = "completed", ignore = true)
+    Task toDomain(TaskCreateRequest request);
+
+    @Mapping(source = "title", target = "title")
+    TaskResponse toResponse(Task task);
+
     default String map(TaskTitle title) {
         return title != null ? title.getValue() : null;
     }
@@ -27,13 +34,6 @@ public interface ApplicationMapper {
 
     List<TaskResponse> toResponseList(List<Task> tasks);
     
-    @Mapping(target = "id" , ignore = true )
-    @Mapping(target = "completed", ignore = true)
-    Task toDomain(TaskCreateRequest request);
-
-    @Mapping(source = "title", target = "title")
-    TaskResponse toResponse(Task task);
-
      @Mapping(target = "id", ignore = true)
     void updateDomainFromRequest(TaskUpdateRequest request, @MappingTarget Task task);
     

@@ -6,6 +6,6 @@ import com.example.boradra.taskmanager.domain.model.TaskTitle;
 import com.example.boradra.taskmanager.infrastructure.persistence.entity.TaskJpaEntity;
 public interface JpaTaskRepository extends JpaRepository<TaskJpaEntity, Long> {
 
-    boolean existsByTitle(TaskTitle taskTitle);
+    boolean existsByTitle(String taskTitle);
 }
 

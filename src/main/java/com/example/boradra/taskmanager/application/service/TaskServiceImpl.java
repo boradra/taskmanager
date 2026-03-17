@@ -15,6 +15,8 @@ import com.example.boradra.taskmanager.application.applicationMapper.Application
 import com.example.boradra.taskmanager.domain.exception.DomainTaskNotFoundException;
 import com.example.boradra.taskmanager.domain.model.TaskType;
 import com.example.boradra.taskmanager.infrastructure.persistence.strategy.TaskRepeatStrategyFactory;
+import com.example.boradra.taskmanager.domain.exception.DomainTaskAlreadyExist;
+import com.example.boradra.taskmanager.domain.exception.InvalidTaskTypeException;
 
 @Service
 public class TaskServiceImpl implements TaskService {
@@ -30,15 +32,15 @@ public class TaskServiceImpl implements TaskService {
     public TaskResponse createTask(TaskCreateRequest request) {
 
     TaskTitle titleToRequest = new TaskTitle(request.getTitle());
-    /*if (taskRepository.existByTitle(titleToRequest)) {
-        throw new RuntimeException("Bu başlığa sahip bir görev zaten mevcut.");
+    if (taskRepository.existByTitle(titleToRequest)) {
+        throw new DomainTaskAlreadyExist("Task with title '" + request.getTitle() + "' already exists");
     }
-        */
+
     TaskType type;
     try {
         type = TaskType.valueOf(request.getTaskType().toUpperCase());
     } catch (IllegalArgumentException e) {
-        throw new RuntimeException("Invalid task type: " + request.getTaskType());
+        throw new InvalidTaskTypeException("Invalid task type: " + request.getTaskType());
     }
     
     TaskRepeatStrategy strategy = taskRepeatStrategyFactory.getStrategy(type);

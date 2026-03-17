@@ -54,6 +54,6 @@ public class TaskRepositoryImpl implements TaskRepository {
     @Override
     public boolean existByTitle(TaskTitle taskTitle) 
     {
-        return jpaTaskRepository.existsByTitle(taskTitle);
+        return jpaTaskRepository.existsByTitle(taskTitle.getValue());
     }
 }

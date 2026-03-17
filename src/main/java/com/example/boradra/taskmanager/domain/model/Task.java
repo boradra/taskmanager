@@ -2,7 +2,6 @@ package com.example.boradra.taskmanager.domain.model;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.val;
 
 import java.time.LocalDate;
 import java.util.Objects;
