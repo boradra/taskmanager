@@ -2,6 +2,7 @@ package com.example.boradra.taskmanager.application.service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Locale;
 import org.springframework.stereotype.Service;
 
 import com.example.boradra.taskmanager.application.dto.TaskCreateRequest;
@@ -38,7 +39,7 @@ public class TaskServiceImpl implements TaskService {
 
     TaskType type;
     try {
-        type = TaskType.valueOf(request.getTaskType().toUpperCase());
+        type = TaskType.valueOf(request.getTaskType().toUpperCase(Locale.ROOT));
     } catch (IllegalArgumentException e) {
         throw new InvalidTaskTypeException("Invalid task type: " + request.getTaskType());
     }
