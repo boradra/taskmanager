@@ -1,8 +1,6 @@
 package com.example.boradra.taskmanager.application.dto;
 
 
-import com.example.boradra.taskmanager.domain.model.Task;
-import com.example.boradra.taskmanager.domain.model.TaskType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;

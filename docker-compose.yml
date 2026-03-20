@@ -1,0 +1,24 @@
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: taskdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    command:
+      sh -c "docker-entrypoint.sh postgres &
+      sleep 5;
+      psql -U postgres -d taskdb -c 'CREATE SCHEMA IF NOT EXISTS taskuser;' &&
+      wait"
+
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/taskdb
+      DB_PASSWORD: ${DB_PASSWORD}
