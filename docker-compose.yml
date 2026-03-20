@@ -7,11 +7,6 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
       - "5432:5432"
-    command:
-      sh -c "docker-entrypoint.sh postgres &
-      sleep 5;
-      psql -U postgres -d taskdb -c 'CREATE SCHEMA IF NOT EXISTS taskuser;' &&
-      wait"
 
   app:
     build: .
