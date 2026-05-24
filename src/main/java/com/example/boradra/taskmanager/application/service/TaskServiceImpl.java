@@ -39,7 +39,10 @@ public class TaskServiceImpl implements TaskService {
 
     TaskType type;
     try {
-        type = TaskType.valueOf(request.getTaskType().toUpperCase(Locale.ROOT));
+        String rawType = (request.getTaskType() == null || request.getTaskType().isBlank())
+                ? "ONCE"
+                : request.getTaskType();
+        type = TaskType.valueOf(rawType.toUpperCase(Locale.ROOT));
     } catch (IllegalArgumentException e) {
         throw new InvalidTaskTypeException("Invalid task type: " + request.getTaskType());
     }
@@ -71,14 +74,24 @@ public class TaskServiceImpl implements TaskService {
         return responses;
     }
 
-    public TaskResponse updateTask(Long id,TaskUpdateRequest request)
-        {
-            Task task = taskRepository.findById(id).orElseThrow(() -> new DomainTaskNotFoundException("Task not found"));
-            taskDtoMapper.updateDomainFromRequest(request, task);
-            Task updatedTask = taskRepository.save(task);
-            TaskResponse response = taskDtoMapper.toResponse(updatedTask);
-            return response;
-        }
+    public TaskResponse updateTask(Long id, TaskUpdateRequest request) {
+        Task task = taskRepository.findById(id).orElseThrow(() -> new DomainTaskNotFoundException("Task not found"));
+
+        TaskTitle newTitle = request.getTitle() != null ? new TaskTitle(request.getTitle()) : task.getTitle();
+        String newDescription = request.getDescription() != null ? request.getDescription() : task.getDescription();
+
+        Task updatedTask = Task.builder()
+                .id(task.getId())
+                .title(newTitle)
+                .description(newDescription)
+                .completed(task.isCompleted())
+                .type(task.getType())
+                .nextExecutionDate(task.getNextExecutionDate())
+                .build();
+
+        Task savedTask = taskRepository.save(updatedTask);
+        return taskDtoMapper.toResponse(savedTask);
+    }
     public void deleteTask(Long id) {
         taskRepository.findById(id).orElseThrow(() -> new DomainTaskNotFoundException("Task not found"));
         taskRepository.deleteById(id);

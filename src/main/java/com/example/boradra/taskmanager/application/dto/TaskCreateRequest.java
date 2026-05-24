@@ -16,6 +16,7 @@ public class TaskCreateRequest {
     private String title;
     @Size(max = 500)
     private String description;
+    @NotBlank(message = "Task type cannot be blank, Please provide a task type (ONCE, DAILY, WEEKLY, MONTHLY)")
     private String taskType;
     
 }

@@ -179,19 +179,30 @@ class TaskServiceImplTest {
                 .type(TaskType.ONCE)
                 .build();
 
+        Task savedTask = Task.builder()
+                .id(7L)
+                .title(new TaskTitle("Updated title"))
+                .description("Old description")
+                .type(TaskType.ONCE)
+                .build();
+
         TaskResponse expectedResponse = new TaskResponse();
         expectedResponse.setId(7L);
         expectedResponse.setTitle("Updated title");
 
         when(taskRepository.findById(7L)).thenReturn(Optional.of(existingTask));
-        when(taskRepository.save(existingTask)).thenReturn(existingTask);
-        when(applicationMapper.toResponse(existingTask)).thenReturn(expectedResponse);
+        when(taskRepository.save(any(Task.class))).thenReturn(savedTask);
+        when(applicationMapper.toResponse(savedTask)).thenReturn(expectedResponse);
 
         TaskResponse actualResponse = taskService.updateTask(7L, updateRequest);
 
         assertEquals(7L, actualResponse.getId());
-        verify(applicationMapper).updateDomainFromRequest(updateRequest, existingTask);
-        verify(taskRepository).save(existingTask);
+        assertEquals("Updated title", actualResponse.getTitle());
+
+        ArgumentCaptor<Task> captor = ArgumentCaptor.forClass(Task.class);
+        verify(taskRepository).save(captor.capture());
+        assertEquals("Updated title", captor.getValue().getTitle().getValue());
+        assertEquals("Old description", captor.getValue().getDescription());
     }
 
     @Test
